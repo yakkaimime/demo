@@ -1,0 +1,66 @@
+
+.disabled {
+    background: #eee;
+    color: #999;
+    pointer-events: none;
+}
+
+.day-row {
+    margin-bottom: 12px;
+    padding: 6px;
+    border-bottom: 1px solid #ccc;
+}
+
+.label-date {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+#excelBtn {
+    display: none;
+    margin-top: 20px;
+}
+
+.adjust {
+    margin: 0 4px;
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.adjustDisabled.disabled {
+    color: #aaa;
+    pointer-events: none;
+}
+
+.worktime {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+/* スマホ画面用（幅600px以下） */
+@media screen and (max-width: 600px) {
+    body {
+        font-size: 20px;
+    }
+
+    input[type="time"],
+    input[type="month"],
+    select {
+        font-size: 20px;
+        padding: 6px;
+    }
+
+    .adjust {
+        font-size: 20px;
+    }
+
+    .label-date {
+        font-size: 22px;
+    }
+
+    button {
+        font-size: 20px;
+        padding: 10px 16px;
+    }
+}

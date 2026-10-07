@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <!-- ★ iPhone Safari でメディアクエリを効かせる必須設定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>勤怠入力＋Excel出力</title>
+
+    <link rel="stylesheet" href="kintai.css">
+
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+
+</head>
+
+<body>
+
+    <h3>月を選択</h3>
+    <input type="month" class="generateDisabled" id="monthPicker">
+
+    <h3>開始/終了時刻の初期値</h3>
+
+    &nbsp;&nbsp;開始：
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultStart', -30)">-30</span>
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultStart', -15)">-15</span>
+    <input type="time" class="generateDisabled" id="defaultStart" value="09:00">
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultStart', 15)">+15</span>
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultStart', 30)">+30</span>
+
+    <br>
+
+    &nbsp;&nbsp;終了：
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultEnd', -30)">-30</span>
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultEnd', -15)">-15</span>
+    <input type="time" class="generateDisabled" id="defaultEnd" value="18:00">
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultEnd', 15)">+15</span>
+    <span class="adjust adjustDisabled" onclick="adjustTime('defaultEnd', 30)">+30</span>
+
+    <br>
+
+    <h3>休憩時間（開始＋終了 × 3）</h3>
+
+    <!-- 休憩1 -->
+    休憩1：<br>
+    &nbsp;&nbsp;開始：
+    <span class="adjust" onclick="adjustBreak('break1_start', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break1_start', -15)">-15</span>
+    <input type="time" id="break1_start" value="12:00" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break1_start', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break1_start', 30)">+30</span>
+
+    <br>
+
+    &nbsp;&nbsp;終了：
+    <span class="adjust" onclick="adjustBreak('break1_end', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break1_end', -15)">-15</span>
+    <input type="time" id="break1_end" value="13:00" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break1_end', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break1_end', 30)">+30</span>
+
+    <br><br>
+
+    <!-- 休憩2 -->
+    休憩2：<br>
+    &nbsp;&nbsp;開始：
+    <span class="adjust" onclick="adjustBreak('break2_start', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break2_start', -15)">-15</span>
+    <input type="time" id="break2_start" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break2_start', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break2_start', 30)">+30</span>
+
+    <br>
+
+    &nbsp;&nbsp;終了：
+    <span class="adjust" onclick="adjustBreak('break2_end', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break2_end', -15)">-15</span>
+    <input type="time" id="break2_end" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break2_end', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break2_end', 30)">+30</span>
+
+    <br><br>
+
+    <!-- 休憩3 -->
+    休憩3：<br>
+    開始：
+    <span class="adjust" onclick="adjustBreak('break3_start', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break3_start', -15)">-15</span>
+    <input type="time" id="break3_start" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break3_start', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break3_start', 30)">+30</span>
+
+    <br>
+
+    終了：
+    <span class="adjust" onclick="adjustBreak('break3_end', -30)">-30</span>
+    <span class="adjust" onclick="adjustBreak('break3_end', -15)">-15</span>
+    <input type="time" id="break3_end" onchange="recalcAllWorkTimes()">
+    <span class="adjust" onclick="adjustBreak('break3_end', 15)">+15</span>
+    <span class="adjust" onclick="adjustBreak('break3_end', 30)">+30</span>
+
+    <br><br>
+
+    <!-- ★ Safari対応：onclick禁止 → addEventListenerで登録する -->
+    <button id="genBtn">生成</button>
+    <button id="resetBtn">取消</button>
+
+    <div id="formArea"></div>
+
+    <button id="excelBtn" onclick="createExcel()">Excel出力</button>
+
+    <br><br>
+
+    <script src="initCheck.js"></script>
+    <script src="kintai.js"></script>
+
+</body>
+
+</html>
