@@ -455,7 +455,7 @@ async function createExcel() {
         days
     };
 
-    const res = await fetch("/api/kintai/excelCreate", {
+    const res = await fetch(`${API_BASE}/api/kintai/excelCreate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

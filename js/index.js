@@ -1,3 +1,5 @@
+const API_BASE = "https://demo-service-185014424630.asia-northeast1.run.app";
+
 document.getElementById("loginBtn").addEventListener("click", async () => {
     const id = document.getElementById("userid").value;
     const pass = document.getElementById("password").value;
@@ -25,7 +27,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
 async function login(id, pass) {
 
-    const res = await fetch("/api/index/login", {
+    const res = await fetch(`${API_BASE}/api/index/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, pass })

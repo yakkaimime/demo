@@ -1,3 +1,5 @@
+const API_BASE = "https://demo-service-185014424630.asia-northeast1.run.app";
+
 async function checkSession() {
     const data = await getSession();
 
@@ -7,7 +9,7 @@ async function checkSession() {
 }
 async function getSession() {
     try {
-        const res = await fetch("/api/util/session", {
+        const res = await fetch(`${API_BASE}/api/util/session`, {
             method: "GET",
             credentials: "include"
         });
