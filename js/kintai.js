@@ -1,5 +1,3 @@
-const API_BASE = "https://demo-service-185014424630.asia-northeast1.run.app";
-
 // ★★★★★ localStorage 安全ラッパ（Safari対応） ★★★★★
 function safeGet(key) {
     try {
