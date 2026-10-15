@@ -32,6 +32,7 @@ async function login(id, pass) {
         const res = await fetch(`${API_BASE}/api/index/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({ id, pass })
         });
 
