@@ -382,6 +382,7 @@ async function createExcel() {
 
     // ログイン情報
     const loginData = await getSession();
+    console.log("■■ loginData：" + loginData);
     if (!loginData.loggedIn) {
         alert("ログインセッションが切れています");
         return;
