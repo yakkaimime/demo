@@ -10,13 +10,16 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     }
 
     const isLogin = await login(id, pass);
+    console.log("■■■ isLogin：" + isLogin);
     if (isLogin) {
 
         const url = window.location.pathname;
 
         if (url === "/") {
+            console.log("■■■ url：" + url);
             window.location.href = "/demo/mypage.html";
         } else {
+            console.log("■■■ url：" + url);
             window.location.href = url;
         }
 
