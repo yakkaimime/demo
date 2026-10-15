@@ -27,13 +27,20 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
 async function login(id, pass) {
 
-    const res = await fetch(`${API_BASE}/api/index/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id, pass })
-    });
+    try {
 
-    const data = await res.json();
+        const res = await fetch(`${API_BASE}/api/index/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ id, pass })
+        });
 
-    return data.isLogin;
+        const data = await res.json();
+
+        return data.isLogin;
+
+    } catch (ex) {
+        console.error("login() 内で例外発生:", ex);
+        return false;
+    }
 }

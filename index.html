@@ -11,17 +11,19 @@
 
     <h2>ログイン</h2>
 
-    <div>
-        <label>ユーザーID：</label>
-        <input type="text" id="userid">
-    </div>
+    <form id="loginForm" onsubmit="return false;"></form>
+        <div>
+            <label>ユーザーID：</label>
+            <input type="text" id="userid">
+        </div>
 
-    <div>
-        <label>パスワード：</label>
-        <input type="password" id="password">
-    </div>
+        <div>
+            <label>パスワード：</label>
+            <input type="password" id="password">
+        </div>
 
-    <button id="loginBtn">ログイン</button>
+        <button id="loginBtn">ログイン</button>
+    </form>
 
     <script src="/demo/js/index.js"></script>
 
