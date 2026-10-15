@@ -10,17 +10,14 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
     }
 
     const isLogin = await login(id, pass);
-    console.log("■■■ isLogin：" + isLogin);
     if (isLogin) {
 
         const url = window.location.pathname;
 
         if (url === "/demo/") {
-            console.log("■■■ true url：" + url);
-            //window.location.href = "/demo/mypage.html";
+            window.location.href = "/demo/mypage.html";
         } else {
-            console.log("■■■ false url：" + url);
-            //window.location.href = url;
+            window.location.href = url;
         }
 
     } else {
