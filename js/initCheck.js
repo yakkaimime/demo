@@ -4,7 +4,7 @@ async function checkSession() {
     const data = await getSession();
 
     if (!data.loggedIn) {
-        location.href = "/";
+        location.href = "/demo/";
     }
 }
 async function getSession() {
@@ -17,7 +17,7 @@ async function getSession() {
         return await res.json();
     } catch(ex) {
         alert("エラーが発生しました");
-        location.href = "/";
+        location.href = "/demo/";
     }
 }
 
