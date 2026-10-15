@@ -16,10 +16,10 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
         const url = window.location.pathname;
 
         if (url === "/demo/") {
-            console.log("■■■ url：" + url);
+            console.log("■■■ true url：" + url);
             //window.location.href = "/demo/mypage.html";
         } else {
-            console.log("■■■ url：" + url);
+            console.log("■■■ false url：" + url);
             //window.location.href = url;
         }
 
