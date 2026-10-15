@@ -15,7 +15,7 @@ document.getElementById("loginBtn").addEventListener("click", async () => {
 
         const url = window.location.pathname;
 
-        if (url === "/") {
+        if (url === "/demo/") {
             console.log("■■■ url：" + url);
             window.location.href = "/demo/mypage.html";
         } else {
