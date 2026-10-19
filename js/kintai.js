@@ -145,8 +145,9 @@ function calcWorkTime(dateStr) {
 
 // ▼ 休憩変更時 → 全日再計算
 function recalcAllWorkTimes() {
+    const name = document.getElementById("name").value;
     const ym = document.getElementById("monthPicker").value;
-    if (!ym) return;
+    if (!name || !ym) return;
 
     const [year, month] = ym.split("-");
     const lastDay = new Date(year, month, 0).getDate();
@@ -162,6 +163,7 @@ function recalcAllWorkTimes() {
 // ▼ 初期値欄を非活性化（勤務欄の ±15/±30 も非活性化）
 function disableInitialInputs() {
     const ids = [
+        "name",
         "monthPicker",
         "defaultStart", "defaultEnd",
         "break1_start", "break1_end",
@@ -184,6 +186,7 @@ function disableInitialInputs() {
 // ▼ 取消ボタン → 初期状態に戻す
 function resetAll() {
     const ids = [
+        "name",
         "monthPicker",
         "defaultStart", "defaultEnd",
         "break1_start", "break1_end",
@@ -214,8 +217,9 @@ function generateForm() {
     const area = document.getElementById("formArea");
     area.innerHTML = "";
 
+    const name = document.getElementById("name").value;
     const ym = document.getElementById("monthPicker").value;
-    if (!ym) return;
+    if (!name || !ym) return;
 
     const defaultStart = document.getElementById("defaultStart").value;
     const defaultEnd = document.getElementById("defaultEnd").value;
@@ -375,20 +379,21 @@ function generateForm() {
 
 // ▼ Excel 出力
 async function createExcel() {
+    const name = document.getElementById("name").value;
     const ym = document.getElementById("monthPicker").value;
     if (!ym) return;
 
     const [year, month] = ym.split("-");
 
-    // ログイン情報
-    const loginData = await getSession();
-    console.log("■■ loginData：" + loginData.loggedIn);
-    if (!loginData.loggedIn) {
-        alert("ログインセッションが切れています");
-        return;
-    }
+    // // ログイン情報
+    // const loginData = await getSession();
+    // console.log("■■ loginData：" + loginData.loggedIn);
+    // if (!loginData.loggedIn) {
+    //     alert("ログインセッションが切れています");
+    //     return;
+    // }
 
-    const name = loginData.user.name;
+    // const name = loginData.user.name;
 
     // 画面入力情報
     const defaultStart = document.getElementById("defaultStart").value;
