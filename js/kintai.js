@@ -392,10 +392,14 @@ async function createExcel() {
 
     // ファイル名取得
     const resGetFileName = await fetch(`${API_BASE}/api/kintai/getFileName`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ year, month, id, pass })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+            year: year,
+            month: month,
+            id: id,
+            pass: pass })
     });
 
     const resGetFileNameJson = await resGetFileName.json();
