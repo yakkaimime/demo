@@ -551,6 +551,10 @@ function calcNightBreakMinutes(startTime, endTime, breaks) {
     let totalNightBreak = 0;
 
     breaks.forEach(b => {
+        if (!b.start || !b.end) {
+            return;
+        }
+
         const bs = toMinutes(b.start);
         const be = toMinutes(b.end);
 
