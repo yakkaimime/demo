@@ -425,7 +425,7 @@ async function createExcel() {
             { start: break3Start, end: break3End }
         ];
         const totalBreak = calcTotalBreakMinutes(st, en, breaks);
-        const nightBreak = calcNightBreakMinutes(breaks);
+        const nightBreak = calcNightBreakMinutes(st, en, breaks);
         const breakTime  = totalBreak - nightBreak;
 
         let holiday = "";
@@ -503,7 +503,7 @@ async function createExcel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${payload.year}-${payload.month}_kintai.xlsm`;
+    a.download = filename; //デンリ勤務表_佐藤佑磨_202609
     a.click();
     URL.revokeObjectURL(url);
 
@@ -537,38 +537,45 @@ function calcTotalBreakMinutes(startTime, endTime, breaks) {
 
     return total;
 }
+// 深夜帯（22:00〜05:00）と重なる休憩時間を計算
+function calcNightBreakMinutes(startTime, endTime, breaks) {
+    const start = toMinutes(startTime);
+    const end   = toMinutes(endTime);
 
-// 深夜時間（22:00〜05:00）と重なる休憩時間を計算
-function calcNightBreakMinutes(breaks) {
-    const night1Start = 22 * 60;  // 22:00
-    const night1End   = 24 * 60;  // 24:00
-    const night2Start = 0;        // 00:00
-    const night2End   = 5 * 60;   // 05:00
+    // 深夜帯を2つに分割
+    const night1Start = 22 * 60;   // 22:00
+    const night1End   = 24 * 60;   // 24:00
+    const night2Start = 0;         // 00:00
+    const night2End   = 5 * 60;    // 05:00
 
-    let total = 0;
+    let totalNightBreak = 0;
 
     breaks.forEach(b => {
-        if (!b.start || !b.end) {
-            return;
-        }
         const bs = toMinutes(b.start);
         const be = toMinutes(b.end);
 
-        // 休憩が翌日まで続く場合（例：23:00〜02:00）
-        if (be < bs) {
-            // 22:00〜24:00 と重なる部分
-            total += overlap(bs, 24 * 60, night1Start, night1End);
+        // 勤務時間と休憩時間の重なり（通常の休憩）
+        const breakInWork = overlap(start, end, bs, be);
+        if (breakInWork === 0) return; // 勤務時間外の休憩は無視
 
-            // 00:00〜05:00 と重なる部分
-            total += overlap(0, be, night2Start, night2End);
+        // 深夜帯との重なり（深夜休憩）
+        let nightBreak = 0;
+
+        // 22:00〜24:00
+        nightBreak += overlap(bs, be, night1Start, night1End);
+
+        // 00:00〜05:00（勤務が翌日にまたぐ場合）
+        if (end < start) {
+            // 例：21:00〜03:00
+            nightBreak += overlap(bs, be, night2Start, end);
         } else {
-            // 通常の休憩（同日内）
-            total += overlap(bs, be, night1Start, night1End);
-            total += overlap(bs, be, night2Start, night2End);
+            nightBreak += overlap(bs, be, night2Start, night2End);
         }
+
+        totalNightBreak += nightBreak;
     });
 
-    return total;
+    return totalNightBreak;
 }
 
 // 時刻 → 分変換
