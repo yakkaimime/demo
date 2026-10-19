@@ -391,19 +391,22 @@ async function createExcel() {
     const [year, month] = ym.split("-");
 
     // ファイル名取得
-    const fileName = await fetch(`${API_BASE}/api/kintai/getFileName`, {
+    const resGetFileName = await fetch(`${API_BASE}/api/kintai/getFileName`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({ year, month, id, pass })
     });
 
-    if (!fileName) {
+    const resGetFileNameJson = await resGetFileName.json();
+
+    if (!resGetFileNameJson.isLogin) {
         alert("ユーザーIDかパスワードが間違っています");
         return;
     }
 
     // ファイル名から名前の取得
+    const fileName = resGetFileNameJson.fileName;
     const parts = fileName.split("_");
     let name = parts[1] || "";
 
@@ -506,16 +509,10 @@ async function createExcel() {
 
     // 正常時
     const blob = await res.blob();
-    // Content-Disposition からファイル名を取得
-    const disposition = res.headers.get("Content-Disposition");
-    let filename = "download.xlsx";
-    if (disposition && disposition.includes("filename=")) {
-        filename = disposition.split("filename=")[1].trim();
-    }
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = filename; //デンリ勤務表_佐藤佑磨_202609
+    a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
 
