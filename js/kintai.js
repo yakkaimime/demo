@@ -145,9 +145,10 @@ function calcWorkTime(dateStr) {
 
 // ▼ 休憩変更時 → 全日再計算
 function recalcAllWorkTimes() {
-    const name = document.getElementById("name").value;
+    const id = document.getElementById("id").value;
+    const pass = document.getElementById("pass").value;
     const ym = document.getElementById("monthPicker").value;
-    if (!name || !ym) return;
+    if (!id || !pass || !ym) return;
 
     const [year, month] = ym.split("-");
     const lastDay = new Date(year, month, 0).getDate();
@@ -163,7 +164,8 @@ function recalcAllWorkTimes() {
 // ▼ 初期値欄を非活性化（勤務欄の ±15/±30 も非活性化）
 function disableInitialInputs() {
     const ids = [
-        "name",
+        "id",
+        "pass",
         "monthPicker",
         "defaultStart", "defaultEnd",
         "break1_start", "break1_end",
@@ -186,7 +188,8 @@ function disableInitialInputs() {
 // ▼ 取消ボタン → 初期状態に戻す
 function resetAll() {
     const ids = [
-        "name",
+        "id",
+        "pass",
         "monthPicker",
         "defaultStart", "defaultEnd",
         "break1_start", "break1_end",
@@ -217,9 +220,10 @@ function generateForm() {
     const area = document.getElementById("formArea");
     area.innerHTML = "";
 
-    const name = document.getElementById("name").value;
+    const id = document.getElementById("id").value;
+    const pass = document.getElementById("pass").value;
     const ym = document.getElementById("monthPicker").value;
-    if (!name || !ym) return;
+    if (!id || !pass || !ym) return;
 
     const defaultStart = document.getElementById("defaultStart").value;
     const defaultEnd = document.getElementById("defaultEnd").value;
@@ -379,21 +383,29 @@ function generateForm() {
 
 // ▼ Excel 出力
 async function createExcel() {
-    const name = document.getElementById("name").value;
+    const id = document.getElementById("id").value;
+    const pass = document.getElementById("pass").value;
     const ym = document.getElementById("monthPicker").value;
     if (!ym) return;
 
     const [year, month] = ym.split("-");
 
-    // // ログイン情報
-    // const loginData = await getSession();
-    // console.log("■■ loginData：" + loginData.loggedIn);
-    // if (!loginData.loggedIn) {
-    //     alert("ログインセッションが切れています");
-    //     return;
-    // }
+    // ファイル名取得
+    const fileName = await fetch(`${API_BASE}/api/kintai/getFileName`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ year, month, id, pass })
+    });
 
-    // const name = loginData.user.name;
+    if (!fileName) {
+        alert("ユーザーIDかパスワードが間違っています");
+        return;
+    }
+
+    // ファイル名から名前の取得
+    const parts = fileName.split("_");
+    let name = parts[1] || "";
 
     // 画面入力情報
     const defaultStart = document.getElementById("defaultStart").value;
