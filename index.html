@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ログイン</title>
+
+    <script>
+        fetch("/demo/header.html")
+        .then(res => res.text())
+        .then(html => document.head.insertAdjacentHTML("beforeend", html));
+    </script>
 </head>
 
 <body>

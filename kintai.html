@@ -8,6 +8,12 @@
 
     <title>勤怠入力＋Excel出力</title>
 
+    <script>
+        fetch("/demo/header.html")
+        .then(res => res.text())
+        .then(html => document.head.insertAdjacentHTML("beforeend", html));
+    </script>
+
     <link rel="stylesheet" href="/demo/css/kintai.css">
 
     <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
