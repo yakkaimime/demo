@@ -40,27 +40,14 @@
 
 /* スマホ画面用（幅600px以下） */
 @media screen and (max-width: 600px) {
-    body {
-        font-size: 20px;
-    }
 
     input[type="time"],
     input[type="month"],
     select {
-        font-size: 20px;
         padding: 6px;
     }
 
-    .adjust {
-        font-size: 20px;
-    }
-
-    .label-date {
-        font-size: 22px;
-    }
-
     button {
-        font-size: 20px;
         padding: 10px 16px;
     }
 }
