@@ -259,6 +259,8 @@ function generateForm() {
             区分：
             ${selectHTML}
 
+            <span class="worktime" id="work_${dateStr}">0:00</span>
+
             <br>
             備考：
             <input type="text" id="notes_${dateStr}">
@@ -314,8 +316,6 @@ function generateForm() {
                 ${disabled ? "disabled class='adjust adjustDisabled'" : " class='adjust'"}
                 id="adj_e_${dateStr}_30"
                 onclick="adjustTime('end_${dateStr}', 30, '${dateStr}')">+30</span>
-
-            <span class="worktime" id="work_${dateStr}">0:00</span>
         `;
 
         // チェックボックス ON/OFF
